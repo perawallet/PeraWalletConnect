@@ -1,0 +1,8 @@
+-- migrates 7db to 8db
+
+-- CREATE V8 SCHEMA
+
+-- ALTER TABLES
+ALTER TABLE ProposalDao ADD COLUMN redirect TEXT NOT NULL DEFAULT "";
+
+-- ALTER TABLE SessionDao ADD COLUMN is_authenticated INTEGER AS Boolean NOT NULL;

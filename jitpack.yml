@@ -1,0 +1,8 @@
+jdk:
+  - openjdk17
+
+before_install:
+  - echo "Preparing PeraWalletConnect build"
+
+install:
+  - ./gradlew clean :wallet-connect-v1:assemble :wallet-connect-v2:assembleRelease
