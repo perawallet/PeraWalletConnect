@@ -1,0 +1,78 @@
+# --- Android build artifacts ---
+*.apk
+*.aar
+*.ap_
+*.aab
+*.dex
+*.class
+
+# --- Build directories ---
+bin/
+gen/
+out/
+.gradle/
+build/
+
+# --- Local configuration ---
+local.properties
+
+# --- ProGuard / R8 ---
+proguard/
+
+# --- Logs ---
+*.log
+
+# --- Android Studio / IntelliJ ---
+*.iml
+/.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/jarRepositories.xml
+.idea/caches
+.idea/modules.xml
+.idea/navEditor.xml
+!.idea/codeStyles/**
+!.idea/editor.xml
+!/.idea/inspectionProfiles
+
+# --- NDK & Native builds ---
+.externalNativeBuild/
+.cxx/
+
+# --- Google Services ---
+**/google-services.json
+
+# --- Freeline (old build system) ---
+freeline.py
+freeline/
+freeline_project_description.json
+
+# --- Fastlane (release automation) ---
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+fastlane/readme.md
+
+# --- Version control metadata ---
+vcs.xml
+
+# --- Lint ---
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+
+# --- Android Profiling ---
+*.hprof
+
+# --- Keystore files ---
+*.keystore
+# *.jks  # uncomment if needed
+
+# --- Module build directories ---
+core/build/

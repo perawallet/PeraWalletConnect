@@ -1,0 +1,104 @@
+[versions]
+peraWalletConnect = "1.0.8"
+minSdk = "24"
+compileSdk = "36"
+targetSdk = "36"
+
+agp = "8.13.0"
+kotlin = "2.1.0"
+
+# Libraries
+moshi = "1.15.2"
+okhttp = "5.2.1"
+gson = "2.13.2"
+khex = "1.1.2"
+bcprov = "1.82"
+
+ksp = "2.1.0-1.0.29"
+
+coroutines = "1.10.2"
+sqlDelight = "2.1.0"
+scarlet = "1.0.1"
+koin = "4.1.1"
+retrofit = "3.0.0"
+sqlCipher = "4.11.0"
+multibase = "1.1.1"
+timber = "5.0.1"
+web3j = "5.0.1"
+kethereum = "0.86.0"
+relinker = "1.4.5"
+
+firebaseBOM = "34.4.0"
+
+androidxSecurity = "1.1.0"
+nmcp = "1.2.0"
+
+[libraries]
+
+# Core
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+bcprov = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bcprov" }
+khex-core = { module = "com.github.komputing.khex:core", version.ref = "khex" }
+khex-extensions = { module = "com.github.komputing.khex:extensions", version.ref = "khex" }
+
+sqlDelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqlDelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sqlDelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqlDelight" }
+sqlDelight-async = { module = "app.cash.sqldelight:async-extensions", version.ref = "sqlDelight" }
+
+androidx-security = { module = "androidx.security:security-crypto-ktx", version.ref = "androidxSecurity" }
+
+#-------------------------- Compose --------------------------
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+scarlet = { module = "com.walletconnect.Scarlet:scarlet", version.ref = "scarlet" }
+scarlet-okhttp = { module = "com.walletconnect.Scarlet:websocket-okhttp", version.ref = "scarlet" }
+scarlet-coroutines = { module = "com.walletconnect.Scarlet:stream-adapter-coroutines", version.ref = "scarlet" }
+scarlet-moshi = { module = "com.walletconnect.Scarlet:message-adapter-moshi", version.ref = "scarlet" }
+scarlet-android = { module = "com.walletconnect.Scarlet:lifecycle-android", version.ref = "scarlet" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+
+moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
+moshi-ksp = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+
+kethereum-bip39 = { module = "com.github.komputing.kethereum:bip39", version.ref = "kethereum" }
+kethereum-bip39-wordlist = { module = "com.github.komputing.kethereum:bip39_wordlist_en", version.ref = "kethereum" }
+kethereum-bip32 = { module = "com.github.komputing.kethereum:bip32", version.ref = "kethereum" }
+kethereum-model = { module = "com.github.komputing.kethereum:model", version.ref = "kethereum" }
+kethereum-crypto = { module = "com.github.komputing.kethereum:crypto_impl_spongycastle", version.ref = "kethereum" }
+
+# Firebase — versions via BOM
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBOM" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+
+sqlCipher = { module = "net.zetetic:sqlcipher-android", version.ref = "sqlCipher" }
+relinker = { module = "com.getkeepsafe.relinker:relinker", version.ref = "relinker" }
+mulitbase = { module = "com.github.multiformats:java-multibase", version.ref = "multibase" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+web3jCrypto = { module = "org.web3j:crypto", version.ref = "web3j" }
+
+[bundles]
+sqlDelight = ["sqlDelight-android", "sqlDelight-coroutines", "sqlDelight-adapters", "sqlDelight-async"]
+
+scarlet = ["scarlet", "scarlet-okhttp", "scarlet-coroutines", "scarlet-moshi"]
+
+retrofit = ["retrofit", "retrofit-moshi"]
+kethereum = ["kethereum-bip39", "kethereum-bip39-wordlist", "kethereum-bip32", "kethereum-model", "kethereum-crypto"]
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+versions-plugin = { id = "com.github.ben-manes.versions", version = "0.53.0" }
+
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+mavenPublish = { id = "com.gradleup.nmcp.aggregation", version.ref = "nmcp" }

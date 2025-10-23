@@ -1,0 +1,34 @@
+package app.perawallet.walletconnectv2.internal.common.di
+
+import app.perawallet.walletconnectv2.internal.utils.Empty
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.scope.Scope
+
+@Suppress("PropertyName")
+class DatabaseConfig(private val storagePrefix: String = String.Empty) {
+    val ANDROID_CORE_DB_NAME
+        get() = storagePrefix + "WalletConnectAndroidCore.db"
+
+    val SIGN_SDK_DB_NAME
+        get() = storagePrefix + "WalletConnectV2.db"
+
+    val CHAT_SDK_DB_NAME
+        get() = storagePrefix + "WalletConnectV2_chat.db"
+
+    val NOTIFY_SDK_DB_NAME
+        get() = storagePrefix + "WalletConnectV2_notify.db"
+
+    val dbNames: List<String> = listOf(ANDROID_CORE_DB_NAME, SIGN_SDK_DB_NAME, CHAT_SDK_DB_NAME, NOTIFY_SDK_DB_NAME)
+}
+
+fun Scope.deleteDatabase(dbName: String) {
+    androidContext().deleteDatabase(dbName)
+}
+
+fun Scope.deleteDatabases() {
+    androidContext().databaseList().forEach { dbName ->
+        if (get<DatabaseConfig>().dbNames.contains(dbName)) {
+            deleteDatabase(dbName)
+        }
+    }
+}
