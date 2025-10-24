@@ -119,7 +119,6 @@ object Web3Wallet {
         coreClient = params.core
         var clientInitCounter = 0
         val onSuccessfulInitialization: () -> Unit = { clientInitCounter++ }
-
         SignClient.initialize(Sign.Params.Init(params.core), onSuccess = onSuccessfulInitialization) { error ->
             if (error.throwable is SignClientAlreadyInitializedException) {
                 onSuccessfulInitialization()

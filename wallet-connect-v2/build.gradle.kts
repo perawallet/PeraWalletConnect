@@ -81,7 +81,6 @@ sqldelight {
             packageName.set("app.perawallet.walletconnectv2.sdk.storage.data.dao")
             srcDirs.setFrom("src/main/sqldelight/core")
             schemaOutputDirectory.set(file("src/main/sqldelight/core/databases"))
-            deriveSchemaFromMigrations.set(false)
             verifyMigrations.set(true)
         }
 
@@ -89,8 +88,8 @@ sqldelight {
             packageName.set("app.perawallet.walletconnectv2.sign.storage.data.dao")
             srcDirs.setFrom("src/main/sqldelight/sign")
             schemaOutputDirectory.set(file("src/main/sqldelight/sign/databases"))
-            deriveSchemaFromMigrations.set(false)
             verifyMigrations.set(true)
+            verifyDefinitions.set(true)
         }
     }
 }
