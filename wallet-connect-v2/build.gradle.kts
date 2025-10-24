@@ -97,14 +97,14 @@ sqldelight {
 dependencies {
     ksp(libs.moshi.ksp)
 
-    implementation(libs.bundles.scarlet)
-    implementation(libs.coroutines)
+    api(libs.coroutines)
+    api(libs.koin.android)
+    api(libs.bundles.scarlet)
     implementation(libs.scarlet.android)
     implementation(libs.bundles.sqlDelight)
     implementation(libs.sqlCipher)
     implementation(libs.relinker)
     implementation(libs.androidx.security)
-    implementation(libs.koin.android)
     implementation(libs.timber)
     implementation(libs.web3jCrypto)
     implementation(libs.bundles.kethereum)
@@ -141,7 +141,7 @@ afterEvaluate {
 
                 groupId = "com.github.perawallet"
                 artifactId = "wallet-connect-v2"
-                version = "1.0.1"
+                version = "1.0.2"
 
                 pom {
                     name.set("Wallet Connect V2")
