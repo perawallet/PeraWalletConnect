@@ -41,7 +41,7 @@ internal data class SessionVO(
 
     internal companion object {
 
-        @JvmSynthetic
+        
         internal fun createUnacknowledgedSession(
             sessionTopic: Topic,
             proposal: ProposalVO,
@@ -70,7 +70,7 @@ internal data class SessionVO(
             )
         }
 
-        @JvmSynthetic
+        
         internal fun createAcknowledgedSession(
             sessionTopic: Topic,
             settleParams: SignParams.SessionSettleParams,
@@ -101,7 +101,7 @@ internal data class SessionVO(
             )
         }
 
-        @JvmSynthetic
+        
         internal fun createAuthenticatedSession(
             sessionTopic: Topic,
             peerPublicKey: PublicKey,

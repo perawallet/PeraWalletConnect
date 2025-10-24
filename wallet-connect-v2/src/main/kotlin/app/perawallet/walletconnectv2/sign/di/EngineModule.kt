@@ -16,7 +16,7 @@ import app.perawallet.walletconnectv2.sign.json_rpc.domain.GetSessionRequestById
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun engineModule() = module {
 
     includes(callsModule(), requestsModule(), responsesModule())

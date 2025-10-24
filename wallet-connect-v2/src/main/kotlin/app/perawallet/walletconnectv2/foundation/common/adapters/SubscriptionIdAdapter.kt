@@ -5,7 +5,7 @@ import app.perawallet.walletconnectv2.foundation.common.model.SubscriptionId
 
 internal object SubscriptionIdAdapter: JsonAdapter<SubscriptionId>() {
 
-    @JvmSynthetic
+    
     @FromJson
     @Qualifier
     override fun fromJson(reader: JsonReader): SubscriptionId? {
@@ -23,7 +23,7 @@ internal object SubscriptionIdAdapter: JsonAdapter<SubscriptionId>() {
         }
     }
 
-    @JvmSynthetic
+    
     @ToJson
     override fun toJson(writer: JsonWriter, @Qualifier value: SubscriptionId?) {
         if (value != null) {

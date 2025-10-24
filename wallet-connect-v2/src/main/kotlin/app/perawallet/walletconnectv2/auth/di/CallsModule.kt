@@ -17,7 +17,7 @@ import app.perawallet.walletconnectv2.auth.use_case.calls.SendAuthRequestUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun callsModule() = module {
 
     single<SendAuthRequestUseCaseInterface> { SendAuthRequestUseCase(crypto = get(), jsonRpcInteractor = get(), selfAppMetaData = get(), logger = get(named(AndroidCommonDITags.LOGGER))) }

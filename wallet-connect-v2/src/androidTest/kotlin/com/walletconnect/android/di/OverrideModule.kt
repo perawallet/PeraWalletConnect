@@ -12,7 +12,7 @@ private const val SHARED_PREFS_FILE = "wc_key_store"
 private const val KEY_STORE_ALIAS = "wc_keystore_key"
 
 // When called more that once, different `storagePrefix` must be defined.
-@JvmSynthetic
+
 internal fun overrideModule(
     relay: RelayConnectionInterface,
     pairing: PairingInterface,

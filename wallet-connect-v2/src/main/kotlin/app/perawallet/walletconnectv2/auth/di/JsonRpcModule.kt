@@ -6,7 +6,7 @@ import app.perawallet.walletconnectv2.internal.utils.addDeserializerEntry
 import app.perawallet.walletconnectv2.internal.utils.addSerializerEntry
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun jsonRpcModule() = module {
 
     addSerializerEntry(AuthRpc.AuthRequest::class)

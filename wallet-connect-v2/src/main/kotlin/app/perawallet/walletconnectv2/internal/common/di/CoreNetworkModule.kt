@@ -33,7 +33,7 @@ private const val MAX_BACKOFF_SEC = 20L
 internal const val KEY_CLIENT_ID = "clientId"
 
 @Suppress("LocalVariableName")
-@JvmSynthetic
+
 fun coreAndroidNetworkModule(serverUrl: String, connectionType: ConnectionType, sdkVersion: String, timeout: NetworkClientTimeout? = null, bundleId: String) = module {
     val networkClientTimeout = timeout ?: NetworkClientTimeout.getDefaultTimeout()
     factory(named(AndroidCommonDITags.RELAY_URL)) {

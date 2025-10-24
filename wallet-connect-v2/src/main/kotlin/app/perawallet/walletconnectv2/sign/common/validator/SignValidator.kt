@@ -24,7 +24,7 @@ import java.net.URISyntaxException
 
 internal object SignValidator {
 
-    @JvmSynthetic
+    
     internal inline fun validateProposalNamespaces(namespaces: Map<String, Namespace>, onError: (ValidationError) -> Unit) {
         when {
             !areNamespacesKeysProperlyFormatted(namespaces) -> onError(ValidationError.UnsupportedNamespaceKey)
@@ -35,7 +35,7 @@ internal object SignValidator {
         }
     }
 
-    @JvmSynthetic
+    
     internal inline fun validateSessionNamespace(
         sessionNamespaces: Map<String, Namespace.Session>,
         requiredNamespaces: Map<String, Namespace.Proposal>,
@@ -55,7 +55,7 @@ internal object SignValidator {
         }
     }
 
-    @JvmSynthetic
+    
     internal inline fun validateSupportedNamespace(
         sessionNamespaces: Map<String, Namespace.Session>,
         requiredNamespaces: Map<String, Namespace.Proposal>,
@@ -65,7 +65,7 @@ internal object SignValidator {
         if (!areAllChainsApproved(sessionNamespaces, requiredNamespaces)) onError(ValidationError.UserRejectedChains(NAMESPACE_ACCOUNTS_WRONG_NAMESPACE_MESSAGE))
     }
 
-    @JvmSynthetic
+    
     internal inline fun validateProperties(properties: Map<String, String>, onError: (ValidationError) -> Unit) {
         if (properties.isEmpty()) {
             onError(ValidationError.InvalidSessionProperties)
@@ -75,7 +75,7 @@ internal object SignValidator {
     private fun areAllNamespacesApproved(sessionNamespacesKeys: Set<String>, proposalNamespacesKeys: Set<String>): Boolean =
         sessionNamespacesKeys.containsAll(proposalNamespacesKeys)
 
-    @JvmSynthetic
+    
     internal inline fun validateChainIdWithMethodAuthorisation(
         chainId: String,
         method: String,
@@ -89,7 +89,7 @@ internal object SignValidator {
         }
     }
 
-    @JvmSynthetic
+    
     internal inline fun validateChainIdWithEventAuthorisation(
         chainId: String,
         event: String,
@@ -103,7 +103,7 @@ internal object SignValidator {
         }
     }
 
-    @JvmSynthetic
+    
     internal inline fun validateSessionRequest(request: EngineDO.Request, onError: (ValidationError) -> Unit) {
         if (request.params.isEmpty() || request.method.isEmpty() || request.chainId.isEmpty() ||
             request.topic.isEmpty() || !isChainIdCAIP2Compliant(request.chainId)
@@ -113,14 +113,14 @@ internal object SignValidator {
     }
 
 
-    @JvmSynthetic
+    
     internal inline fun validateEvent(event: EngineDO.Event, onError: (ValidationError) -> Unit) {
         if (event.data.isEmpty() || event.name.isEmpty() || event.chainId.isEmpty() || !isChainIdCAIP2Compliant(event.chainId)) {
             onError(ValidationError.InvalidEvent)
         }
     }
 
-    @JvmSynthetic
+    
     internal inline fun validateSessionExtend(newExpiry: Long, currentExpiry: Long, onError: (ValidationError) -> Unit) {
         val extendedExpiry = newExpiry - currentExpiry
         val maxExpiry = weekInSeconds
@@ -130,7 +130,7 @@ internal object SignValidator {
         }
     }
 
-    @JvmSynthetic
+    
     internal fun validateWCUri(uri: String): EngineDO.WalletConnectUri? {
         if (!uri.startsWith("wc:")) return null
         val properUriString = when {
@@ -306,7 +306,7 @@ internal object SignValidator {
     private fun getValidNamespaces(namespaces: Map<String, Namespace>) =
         namespaces.filter { (_, namespace) -> namespace.chains != null && namespace.chains!!.isNotEmpty() }
 
-    @JvmSynthetic
+    
     internal fun getChainFromAccount(accountId: String): String {
         val elements = accountId.split(":")
         if (elements.isEmpty() || elements.size != 3) return accountId
@@ -315,7 +315,7 @@ internal object SignValidator {
         return "$namespace:$reference"
     }
 
-    @JvmSynthetic
+    
     internal fun getNamespaceKeyFromChainId(chainId: String): String {
         val elements = chainId.split(":")
         if (elements.isEmpty() || elements.size != 2) return chainId

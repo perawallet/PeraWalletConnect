@@ -25,15 +25,15 @@ internal class SessionStorageRepository(
     private val optionalNamespaceDaoQueries: OptionalNamespaceDaoQueries,
     private val tempNamespaceDaoQueries: TempNamespaceDaoQueries
 ) {
-    @JvmSynthetic
+    
     var onSessionExpired: (topic: Topic) -> Unit = {}
 
-    @JvmSynthetic
+    
     fun getListOfSessionVOsWithoutMetadata(): List<SessionVO> =
         sessionDaoQueries.getListOfSessionDaos(mapper = this@SessionStorageRepository::mapSessionDaoToSessionVO).executeAsList()
 
     // TODO: Maybe move this out and into SignValidator?
-    @JvmSynthetic
+    
     fun isSessionValid(topic: Topic): Boolean {
         val hasTopic = sessionDaoQueries.hasTopic(topic.value).executeAsOneOrNull() != null
 
@@ -48,23 +48,23 @@ internal class SessionStorageRepository(
         }
     }
 
-    @JvmSynthetic
+    
     fun getSessionExpiryByTopic(topic: Topic): Expiry? {
         return sessionDaoQueries.getExpiry(topic.value).executeAsOneOrNull()?.let { expiryLong ->
             Expiry(expiryLong)
         }
     }
 
-    @JvmSynthetic
+    
     fun getSessionWithoutMetadataByTopic(topic: Topic): SessionVO =
         sessionDaoQueries.getSessionByTopic(topic.value, mapper = this@SessionStorageRepository::mapSessionDaoToSessionVO).executeAsOne()
 
-    @JvmSynthetic
+    
     fun getAllSessionTopicsByPairingTopic(pairingTopic: Topic): List<String> =
         sessionDaoQueries.getAllSessionTopicsByPairingTopic(pairingTopic.value).executeAsList()
 
     @Synchronized
-    @JvmSynthetic
+    
     @Throws(SQLiteException::class)
     fun insertSession(session: SessionVO, requestId: Long) {
         with(session) {
@@ -89,17 +89,17 @@ internal class SessionStorageRepository(
         insertOptionalNamespace(session.optionalNamespaces, lastInsertedSessionId)
     }
 
-    @JvmSynthetic
+    
     fun acknowledgeSession(topic: Topic) {
         sessionDaoQueries.acknowledgeSession(true, topic.value)
     }
 
-    @JvmSynthetic
+    
     fun extendSession(topic: Topic, expiryInSeconds: Long) {
         sessionDaoQueries.updateSessionExpiry(expiryInSeconds, topic.value)
     }
 
-    @JvmSynthetic
+    
     @Throws(SQLiteException::class)
     fun insertTempNamespaces(
         topic: String,
@@ -121,7 +121,7 @@ internal class SessionStorageRepository(
         }
     }
 
-    @JvmSynthetic
+    
     fun getTempNamespaces(requestId: Long): Map<String, Namespace.Session> {
         return tempNamespaceDaoQueries.getTempNamespacesByRequestId(requestId, mapper = ::mapTempNamespaceToNamespaceVO)
             .executeAsList().let { listOfMappedTempNamespaces ->
@@ -130,7 +130,7 @@ internal class SessionStorageRepository(
             }
     }
 
-    @JvmSynthetic
+    
     @Throws(SQLiteException::class)
     fun deleteNamespaceAndInsertNewNamespace(
         topic: String,
@@ -144,27 +144,27 @@ internal class SessionStorageRepository(
         }
     }
 
-    @JvmSynthetic
+    
     fun isUpdatedNamespaceValid(topic: String, timestamp: Long): Boolean {
         return namespaceDaoQueries.isUpdateNamespaceRequestValid(timestamp, topic).executeAsOneOrNull() ?: false
     }
 
-    @JvmSynthetic
+    
     fun isUpdatedNamespaceResponseValid(topic: String, timestamp: Long): Boolean {
         return tempNamespaceDaoQueries.isUpdateNamespaceRequestValid(topic, timestamp).executeAsOneOrNull() ?: false
     }
 
-    @JvmSynthetic
+    
     fun markUnAckNamespaceAcknowledged(requestId: Long) {
         tempNamespaceDaoQueries.markNamespaceAcknowledged(requestId)
     }
 
-    @JvmSynthetic
+    
     fun deleteTempNamespacesByRequestId(requestId: Long) {
         tempNamespaceDaoQueries.deleteTempNamespacesByRequestId(requestId)
     }
 
-    @JvmSynthetic
+    
     fun deleteSession(topic: Topic) {
         sessionRequestEventsQueue.removeAll { event -> event.request.topic == topic.value }
         namespaceDaoQueries.deleteNamespacesByTopic(topic.value)

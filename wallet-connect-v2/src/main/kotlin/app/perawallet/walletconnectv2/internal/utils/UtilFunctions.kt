@@ -11,21 +11,21 @@ import org.koin.ext.getFullName
 import java.net.URI
 import kotlin.reflect.KClass
 
-@get:JvmSynthetic
+
 val String.Companion.Empty
     get() = ""
 
-@get:JvmSynthetic
+
 val Int.Companion.DefaultId
     get() = -1
 
-@JvmSynthetic
+
 fun Long.extractTimestamp() = this / 1000
 
-@JvmSynthetic
+
 fun Expiry.isSequenceValid(): Boolean = seconds > currentTimeInSeconds
 
-@get:JvmSynthetic
+
 val String.Companion.HexPrefix
     get() = "0x"
 
@@ -45,7 +45,7 @@ fun <T> Module.addJsonAdapter(type: Class<T>, adapter: (Moshi) -> JsonAdapter<T>
     return single(qualifier = named("$jsonAdapterEntry")) { jsonAdapterEntry }
 }
 
-@JvmSynthetic
+
 fun compareDomains(metadataUrl: String, originUrl: String): Boolean {
     try {
         val metadataDomain = URI(metadataUrl).host.removePrefix("www.")

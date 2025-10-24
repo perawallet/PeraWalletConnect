@@ -9,11 +9,11 @@ import app.perawallet.walletconnectv2.pairing.engine.model.EngineDO
 import app.perawallet.walletconnectv2.foundation.common.model.Topic
 import app.perawallet.walletconnectv2.internal.utils.Empty
 
-@JvmSynthetic
+
 internal fun EngineDO.PairingDelete.toCore(): Core.Model.DeletedPairing =
     Core.Model.DeletedPairing(topic, reason)
 
-@JvmSynthetic
+
 internal fun Pairing.toCore(): Core.Model.Pairing =
     Core.Model.Pairing(
         topic.value,
@@ -26,7 +26,7 @@ internal fun Pairing.toCore(): Core.Model.Pairing =
         methods ?: String.Empty
     )
 
-@JvmSynthetic
+
 fun Core.Model.Pairing.toPairing(): Pairing =
     Pairing(
         Topic(topic),
@@ -38,8 +38,8 @@ fun Core.Model.Pairing.toPairing(): Pairing =
         methods = registeredMethods
     )
 
-@JvmSynthetic
+
 internal fun Core.Model.AppMetaData.toAppMetaData() = AppMetaData(name = name, description = description, url = url, icons = icons, redirect = Redirect(redirect))
 
-@JvmSynthetic
+
 internal fun AppMetaData?.toCore() = Core.Model.AppMetaData(this?.name ?: String.Empty, this?.description ?: String.Empty, this?.url ?: String.Empty, this?.icons ?: emptyList(), this?.redirect?.native)

@@ -73,7 +73,7 @@ data class Cacao(
     }
 }
 
-@JvmSynthetic
+
 internal fun Cacao.Signature.toSignature(): Signature = Signature.fromString(s)
 
 fun Cacao.Payload.toCAIP222Message(chainName: String = "Ethereum"): String {

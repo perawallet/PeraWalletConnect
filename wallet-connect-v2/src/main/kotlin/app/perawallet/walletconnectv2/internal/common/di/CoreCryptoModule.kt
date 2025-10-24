@@ -27,7 +27,7 @@ private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 private const val SHARED_PREFS_FILE = "wc_key_store"
 private const val KEY_STORE_ALIAS = "wc_keystore_key"
 private const val KEY_SIZE = 256
-@JvmSynthetic
+
 fun coreCryptoModule(sharedPrefsFile: String = SHARED_PREFS_FILE, keyStoreAlias: String = KEY_STORE_ALIAS) = module {
 
     @Synchronized

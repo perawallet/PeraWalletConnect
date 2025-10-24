@@ -10,7 +10,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@JvmSynthetic
+
 internal fun verifyModule() = module {
     factory(named(AndroidCommonDITags.VERIFY_URL)) { "https://verify.walletconnect.org/" }
 

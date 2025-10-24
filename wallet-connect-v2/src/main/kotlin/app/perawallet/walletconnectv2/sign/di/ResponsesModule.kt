@@ -10,7 +10,7 @@ import app.perawallet.walletconnectv2.sign.engine.use_case.responses.OnSessionUp
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun responsesModule() = module {
 
     single {

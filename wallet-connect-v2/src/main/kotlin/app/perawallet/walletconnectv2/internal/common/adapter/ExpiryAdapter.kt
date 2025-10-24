@@ -7,7 +7,7 @@ import app.perawallet.walletconnectv2.internal.common.model.Expiry
 
 internal object ExpiryAdapter: JsonAdapter<Expiry>() {
 
-    @JvmSynthetic
+    
     @FromJson
     @Qualifier
     override fun fromJson(reader: JsonReader): Expiry? {
@@ -25,7 +25,7 @@ internal object ExpiryAdapter: JsonAdapter<Expiry>() {
         }
     }
 
-    @JvmSynthetic
+    
     @ToJson
     override fun toJson(writer: JsonWriter, @Qualifier value: Expiry?) {
         if (value != null) {

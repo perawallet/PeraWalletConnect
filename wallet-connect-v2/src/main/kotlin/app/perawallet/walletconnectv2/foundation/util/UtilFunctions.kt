@@ -3,7 +3,7 @@ package app.perawallet.walletconnectv2.foundation.util
 import java.security.SecureRandom
 import kotlin.math.pow
 
-@get:JvmSynthetic
+
 val String.Companion.Empty
     get() = ""
 
@@ -56,5 +56,5 @@ fun String.hexToBytes(): ByteArray {
     return data
 }
 
-@JvmSynthetic
+
 internal fun String.addUserAgent(sdkVersion: String): String = "$this&ua=wc-2/kotlin-$sdkVersion"

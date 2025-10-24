@@ -31,7 +31,7 @@ class RelayClient(private val koinApp: KoinApplication = wcKoinApp) : BaseRelayC
     override val wssConnectionState: StateFlow<WSSConnectionState> = _wssConnectionState
     private lateinit var connectionType: ConnectionType
 
-    @JvmSynthetic
+    
     fun initialize(connectionType: ConnectionType, onError: (Throwable) -> Unit) {
         this.connectionType = connectionType
         logger = koinApp.koin.get(named(AndroidCommonDITags.LOGGER))

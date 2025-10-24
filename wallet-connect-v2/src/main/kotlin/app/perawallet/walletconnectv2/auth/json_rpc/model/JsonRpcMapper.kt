@@ -5,7 +5,7 @@ import app.perawallet.walletconnectv2.auth.common.json_rpc.AuthParams
 import app.perawallet.walletconnectv2.auth.common.model.JsonRpcHistoryEntry
 import app.perawallet.walletconnectv2.foundation.common.model.Topic
 
-@JvmSynthetic
+
 internal fun JsonRpcHistoryRecord.toEntry(params: AuthParams.RequestParams): JsonRpcHistoryEntry =
     JsonRpcHistoryEntry(
         id,
@@ -15,7 +15,7 @@ internal fun JsonRpcHistoryRecord.toEntry(params: AuthParams.RequestParams): Jso
         response
     )
 
-@JvmSynthetic
+
 internal fun AuthParams.RequestParams.toEntry(record: JsonRpcHistoryRecord): JsonRpcHistoryEntry =
     JsonRpcHistoryEntry(
         record.id,

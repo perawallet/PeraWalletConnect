@@ -23,7 +23,7 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import app.perawallet.walletconnectv2.internal.common.scope as wcScope
 
-@JvmSynthetic
+
 internal fun storageModule(dbName: String): Module = module {
     includes(sdkBaseStorageModule(SignDatabase.Schema, dbName))
 

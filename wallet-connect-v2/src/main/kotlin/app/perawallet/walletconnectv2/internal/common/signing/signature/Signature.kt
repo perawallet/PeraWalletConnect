@@ -12,23 +12,23 @@ import app.perawallet.walletconnectv2.foundation.util.hexToBytes
 import app.perawallet.walletconnectv2.internal.utils.HexPrefix
 import org.web3j.crypto.Sign
 
-@JvmSynthetic
+
 
 internal fun Sign.SignatureData.toSignature(): Signature = Signature(v, r, s)
 
 fun Signature.toCacaoSignature(): String = String.HexPrefix + r.bytesToHex() + s.bytesToHex() + v.bytesToHex()
 
-@JvmSynthetic
+
 internal fun Signature.toSignatureData(): Sign.SignatureData = Sign.SignatureData(v, r, s)
 
-@JvmSynthetic
+
 internal fun Signature.verify(originalMessage: String, address: String, type: String, projectId: ProjectId): Boolean = when (type) {
     SignatureType.EIP191.header -> EIP191Verifier.verify(this, originalMessage, address)
     SignatureType.EIP1271.header -> EIP1271Verifier.verify(this, originalMessage, address, projectId.value)
     else -> throw RuntimeException("Invalid signature type")
 }
 
-@JvmSynthetic
+
 internal fun Signature.verifyHexMessage(hexMessage: String, address: String, type: String, projectId: ProjectId): Boolean = when (type) {
     SignatureType.EIP191.header -> EIP191Verifier.verifyHex(this, hexMessage, address)
     SignatureType.EIP1271.header -> EIP1271Verifier.verifyHex(this, hexMessage, address, projectId.value)

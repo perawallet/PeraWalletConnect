@@ -54,7 +54,7 @@ import app.perawallet.walletconnectv2.sign.json_rpc.domain.GetPendingSessionRequ
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun callsModule() = module {
 
     single<ProposeSessionUseCaseInterface> {

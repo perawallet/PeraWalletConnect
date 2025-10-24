@@ -11,7 +11,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@JvmSynthetic
+
 internal fun explorerModule() = module {
 
     single(named(AndroidCommonDITags.EXPLORER_URL)) { "https://registry.walletconnect.org/" }

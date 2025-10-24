@@ -5,7 +5,7 @@ import app.perawallet.walletconnectv2.internal.common.model.Expiry
 object CoreValidator {
 
     /* For account id validation reference check CAIP-10: https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-10.md#syntax */
-    @JvmSynthetic
+    
     fun isAccountIdCAIP10Compliant(accountId: String): Boolean {
         val elements = accountId.split(":")
         if (elements.isEmpty() || elements.size != 3) return false
@@ -17,7 +17,7 @@ object CoreValidator {
     }
 
     /* For chain id validation reference check CAIP-2: https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-2.md#syntax */
-    @JvmSynthetic
+    
     fun isChainIdCAIP2Compliant(chainId: String): Boolean {
         val elements: List<String> = chainId.split(":")
         if (elements.isEmpty() || elements.size != 2) return false
@@ -26,18 +26,18 @@ object CoreValidator {
     }
 
     /* For namespace key validation reference check CAIP-2: https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-2.md#syntax */
-    @JvmSynthetic
+    
     fun isNamespaceRegexCompliant(key: String): Boolean {
         return NAMESPACE_REGEX.toRegex().matches(key)
     }
 
-    @JvmSynthetic
+    
     fun isExpiryWithinBounds(userExpiry: Expiry?): Boolean =
         userExpiry?.seconds?.run {
             (fiveMinutesInSeconds..weekInSeconds).contains(this - currentTimeInSeconds)
         } ?: true
 
-    @JvmSynthetic
+    
     fun Expiry.isExpired(): Boolean = seconds < currentTimeInSeconds
 
     private const val NAMESPACE_REGEX: String = "^[-a-z0-9]{3,8}$"

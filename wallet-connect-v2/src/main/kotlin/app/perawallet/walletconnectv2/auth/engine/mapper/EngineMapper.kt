@@ -7,7 +7,7 @@ import app.perawallet.walletconnectv2.auth.common.model.JsonRpcHistoryEntry
 import app.perawallet.walletconnectv2.auth.common.model.PayloadParams
 import app.perawallet.walletconnectv2.auth.common.model.PendingRequest
 
-@JvmSynthetic
+
 internal fun PayloadParams.toCacaoPayload(iss: Issuer): Cacao.Payload = Cacao.Payload(
     iss.value,
     domain = domain,
@@ -22,9 +22,9 @@ internal fun PayloadParams.toCacaoPayload(iss: Issuer): Cacao.Payload = Cacao.Pa
     resources = resources
 )
 
-@JvmSynthetic
+
 internal fun PayloadParams.toCAIP222Message(iss: Issuer, chainName: String = "Ethereum"): String =
     this.toCacaoPayload(iss).toCAIP222Message(chainName)
 
-@JvmSynthetic
+
 internal fun JsonRpcHistoryEntry.toPendingRequest(): PendingRequest = PendingRequest(id, topic.value, params.payloadParams)

@@ -14,7 +14,7 @@ import app.perawallet.walletconnectv2.sign.engine.use_case.requests.OnSessionUpd
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun requestsModule() = module {
 
     single {

@@ -7,7 +7,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@JvmSynthetic
+
 internal fun pushModule() = module {
 
     factory(named(AndroidCommonDITags.PUSH_URL)) { "https://echo.walletconnect.org/" }

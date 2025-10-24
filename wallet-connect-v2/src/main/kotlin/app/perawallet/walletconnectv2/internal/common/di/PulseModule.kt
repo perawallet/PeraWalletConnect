@@ -13,7 +13,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@JvmSynthetic
+
 fun pulseModule(bundleId: String) = module {
     single(named(AndroidCommonDITags.PULSE_URL)) { "https://pulse.walletconnect.org" }
 

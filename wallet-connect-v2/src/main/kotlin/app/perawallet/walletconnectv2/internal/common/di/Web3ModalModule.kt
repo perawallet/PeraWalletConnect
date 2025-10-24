@@ -20,7 +20,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-@JvmSynthetic
+
 internal fun web3ModalModule() = module {
     single(named(AndroidCommonDITags.WEB3MODAL_URL)) { "https://api.web3modal.com/" }
 

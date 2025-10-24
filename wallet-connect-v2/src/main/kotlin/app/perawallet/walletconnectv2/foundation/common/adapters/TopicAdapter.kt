@@ -5,7 +5,7 @@ import app.perawallet.walletconnectv2.foundation.common.model.Topic
 
 internal object TopicAdapter: JsonAdapter<Topic>() {
 
-    @JvmSynthetic
+    
     @FromJson
     @Qualifier
     override fun fromJson(reader: JsonReader): Topic? {
@@ -23,7 +23,7 @@ internal object TopicAdapter: JsonAdapter<Topic>() {
         }
     }
 
-    @JvmSynthetic
+    
     @ToJson
     override fun toJson(writer: JsonWriter, @Qualifier value: Topic?) {
         if (value != null) {

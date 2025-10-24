@@ -5,7 +5,7 @@ import app.perawallet.walletconnectv2.foundation.common.model.Ttl
 
 internal object TtlAdapter : JsonAdapter<Ttl>() {
 
-    @JvmSynthetic
+    
     @FromJson
     @Qualifier
     override fun fromJson(reader: JsonReader): Ttl? {
@@ -23,7 +23,7 @@ internal object TtlAdapter : JsonAdapter<Ttl>() {
         }
     }
 
-    @JvmSynthetic
+    
     @ToJson
     override fun toJson(writer: JsonWriter, @Qualifier value: Ttl?) {
         if (value != null) {

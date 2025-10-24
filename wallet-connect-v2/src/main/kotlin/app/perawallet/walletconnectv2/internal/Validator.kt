@@ -15,7 +15,7 @@ import java.net.URLDecoder
 internal object Validator {
 
     private const val WC_URI_QUERY_KEY = "wc?uri="
-    @JvmSynthetic
+    
     internal fun validateWCUri(uri: String): WalletConnectUri? {
         val wcUri = getWcUri(uri)
         if (!wcUri.startsWith("wc:")) return null

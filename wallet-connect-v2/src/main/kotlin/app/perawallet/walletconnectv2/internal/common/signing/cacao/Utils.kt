@@ -6,10 +6,10 @@ import app.perawallet.walletconnectv2.internal.utils.HexPrefix
 import org.json.JSONArray
 import org.json.JSONObject
 
-@JvmSynthetic
+
 internal fun String.guaranteeNoHexPrefix(): String = removePrefix(String.HexPrefix)
 
-@JvmSynthetic
+
 fun String?.parseReCaps(): MutableMap<String, MutableMap<String, MutableList<String>>> {
     if (this.isNullOrEmpty()) return emptyMap<String, MutableMap<String, MutableList<String>>>().toMutableMap()
     val reCapsMap: MutableMap<String, MutableMap<String, MutableList<String>>> = mutableMapOf()
@@ -45,7 +45,7 @@ fun String?.parseReCaps(): MutableMap<String, MutableMap<String, MutableList<Str
     return reCapsMap.mapValues { entry -> entry.value.toMutableMap() }.toMutableMap()
 }
 
-@JvmSynthetic
+
 fun List<String>?.decodeReCaps(): String? {
     return try {
         val last = this?.last()
@@ -59,17 +59,17 @@ fun List<String>?.decodeReCaps(): String? {
     }
 }
 
-@JvmSynthetic
+
 fun List<String>?.getMethods(): List<String> {
     return this.decodeReCaps().parseReCaps()["eip155"]?.keys?.sorted()?.map { key -> key.substringAfter('/') } ?: emptyList()
 }
 
-@JvmSynthetic
+
 fun List<String>?.getChains(): List<String> {
     return this.decodeReCaps().parseReCaps()["eip155"]?.values?.flatten()?.distinct() ?: emptyList()
 }
 
-@JvmSynthetic
+
 fun mergeReCaps(json1: JSONObject, json2: JSONObject): String {
     val result = JSONObject(json1.toString()) // Start with a deep copy of json1
 

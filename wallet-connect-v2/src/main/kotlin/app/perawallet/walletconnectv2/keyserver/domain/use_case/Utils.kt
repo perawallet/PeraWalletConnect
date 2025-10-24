@@ -5,7 +5,7 @@ import app.perawallet.walletconnectv2.keyserver.model.KeyServerHttpResponse.Comp
 import app.perawallet.walletconnectv2.keyserver.model.KeyServerResponse
 import retrofit2.Response
 
-@JvmSynthetic
+
 internal fun <K, T : KeyServerHttpResponse<K>> Response<T>.unwrapUnit() {
     if (isSuccessful && body() != null) {
         if (body()!!.status == SUCCESS_STATUS) {
@@ -18,7 +18,7 @@ internal fun <K, T : KeyServerHttpResponse<K>> Response<T>.unwrapUnit() {
     }
 }
 
-@JvmSynthetic
+
 internal fun <K : KeyServerResponse, T : KeyServerHttpResponse<K>> Response<T>.unwrapValue(): K {
     if (isSuccessful && body() != null) {
         if (body()!!.status == SUCCESS_STATUS) {

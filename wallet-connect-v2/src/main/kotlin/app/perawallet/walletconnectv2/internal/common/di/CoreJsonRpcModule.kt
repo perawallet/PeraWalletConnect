@@ -17,7 +17,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import kotlin.reflect.KClass
 
-@JvmSynthetic
+
 fun coreJsonRpcModule() = module {
 
     single<RelayJsonRpcInteractorInterface> {

@@ -13,7 +13,7 @@ import app.perawallet.walletconnectv2.internal.utils.addJsonAdapter
 import app.perawallet.walletconnectv2.internal.utils.addSerializerEntry
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun signJsonRpcModule() = module {
     addSerializerEntry(SignRpc.SessionPropose::class)
     addSerializerEntry(SignRpc.SessionPing::class)

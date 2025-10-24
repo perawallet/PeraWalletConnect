@@ -7,7 +7,7 @@ import app.perawallet.walletconnectv2.internal.common.model.Tags
 
 internal object TagsAdapter : JsonAdapter<Tags>() {
 
-    @JvmSynthetic
+    
     @FromJson
     @Qualifier
     override fun fromJson(reader: JsonReader): Tags? {
@@ -21,7 +21,7 @@ internal object TagsAdapter : JsonAdapter<Tags>() {
         return Tags.values().find { it.id == id }
     }
 
-    @JvmSynthetic
+    
     @ToJson
     override fun toJson(writer: JsonWriter, @Qualifier value: Tags?) {
         if (value != null) {

@@ -9,7 +9,7 @@ import app.perawallet.walletconnectv2.sign.common.model.Request
 import app.perawallet.walletconnectv2.sign.common.model.vo.clientsync.session.SignRpc
 import app.perawallet.walletconnectv2.sign.common.model.vo.clientsync.session.params.SignParams
 
-@JvmSynthetic
+
 internal fun SignRpc.SessionRequest.toRequest(entry: JsonRpcHistoryRecord): Request<String> =
     Request(
         entry.id,
@@ -21,7 +21,7 @@ internal fun SignRpc.SessionRequest.toRequest(entry: JsonRpcHistoryRecord): Requ
         transportType = entry.transportType
     )
 
-@JvmSynthetic
+
 internal fun JsonRpcHistoryRecord.toRequest(params: SignParams.SessionRequestParams): Request<SignParams.SessionRequestParams> =
     Request(
         id,
@@ -32,7 +32,7 @@ internal fun JsonRpcHistoryRecord.toRequest(params: SignParams.SessionRequestPar
         transportType = transportType
     )
 
-@JvmSynthetic
+
 internal fun JsonRpcHistoryRecord.toRequest(params: SignParams.SessionAuthenticateParams): Request<SignParams.SessionAuthenticateParams> =
     Request(
         id,
@@ -44,7 +44,7 @@ internal fun JsonRpcHistoryRecord.toRequest(params: SignParams.SessionAuthentica
         transportType = transportType
     )
 
-@JvmSynthetic
+
 internal fun SignRpc.SessionAuthenticate.toRequest(entry: JsonRpcHistoryRecord): Request<SignParams.SessionAuthenticateParams> =
     Request(
         entry.id,

@@ -10,7 +10,7 @@ import app.perawallet.walletconnectv2.auth.json_rpc.domain.GetPendingJsonRpcHist
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-@JvmSynthetic
+
 internal fun engineModule() = module {
 
     includes(callsModule(), requestsModule(), responsesModule())

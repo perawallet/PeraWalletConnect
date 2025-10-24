@@ -34,7 +34,7 @@ import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-@JvmSynthetic
+
 internal fun EngineDO.WalletConnectUri.toAbsoluteString(): String =
     "wc:${topic.value}@$version?${getQuery()}&symKey=${symKey.keyAsHex}"
 
@@ -46,7 +46,7 @@ private fun EngineDO.WalletConnectUri.getQuery(): String {
     return query
 }
 
-@JvmSynthetic
+
 internal fun SignParams.SessionProposeParams.toEngineDO(topic: Topic): EngineDO.SessionProposal =
     EngineDO.SessionProposal(
         pairingTopic = topic.value,
@@ -63,7 +63,7 @@ internal fun SignParams.SessionProposeParams.toEngineDO(topic: Topic): EngineDO.
         relayData = relays.first().data
     )
 
-@JvmSynthetic
+
 internal fun SignParams.SessionProposeParams.toVO(topic: Topic, requestId: Long): ProposalVO =
     ProposalVO(
         requestId = requestId,
@@ -82,7 +82,7 @@ internal fun SignParams.SessionProposeParams.toVO(topic: Topic, requestId: Long)
         expiry = if (expiryTimestamp != null) Expiry(expiryTimestamp) else null
     )
 
-@JvmSynthetic
+
 internal fun ProposalVO.toSessionProposeRequest(): WCRequest =
     WCRequest(
         topic = pairingTopic,
@@ -96,7 +96,7 @@ internal fun ProposalVO.toSessionProposeRequest(): WCRequest =
         transportType = TransportType.RELAY
     )
 
-@JvmSynthetic
+
 internal fun SignParams.SessionRequestParams.toEngineDO(
     request: WCRequest,
     peerAppMetaData: AppMetaData?,
@@ -113,15 +113,15 @@ internal fun SignParams.SessionRequestParams.toEngineDO(
         if (this.request.expiryTimestamp != null) Expiry(this.request.expiryTimestamp) else null
     )
 
-@JvmSynthetic
+
 internal fun SignParams.DeleteParams.toEngineDO(topic: Topic): EngineDO.SessionDelete =
     EngineDO.SessionDelete(topic.value, message)
 
-@JvmSynthetic
+
 internal fun SignParams.EventParams.toEngineDO(topic: Topic): EngineDO.SessionEvent =
     EngineDO.SessionEvent(topic.value, event.name, event.data.toString(), chainId)
 
-@JvmSynthetic
+
 internal fun SessionVO.toEngineDO(): EngineDO.Session =
     EngineDO.Session(
         topic,
@@ -133,7 +133,7 @@ internal fun SessionVO.toEngineDO(): EngineDO.Session =
         peerAppMetaData
     )
 
-@JvmSynthetic
+
 internal fun SessionVO.toEngineDOSessionExtend(expiryVO: Expiry): EngineDO.SessionExtend =
     EngineDO.SessionExtend(
         topic,
@@ -145,7 +145,7 @@ internal fun SessionVO.toEngineDOSessionExtend(expiryVO: Expiry): EngineDO.Sessi
         selfAppMetaData
     )
 
-@JvmSynthetic
+
 internal fun SessionVO.toSessionApproved(): EngineDO.SessionApproved =
     EngineDO.SessionApproved(
         topic = topic.value,
@@ -154,7 +154,7 @@ internal fun SessionVO.toSessionApproved(): EngineDO.SessionApproved =
         namespaces = sessionNamespaces.toMapOfEngineNamespacesSession()
     )
 
-@JvmSynthetic
+
 internal fun ProposalVO.toSessionSettleParams(
     selfParticipant: SessionParticipant,
     sessionExpiry: Long,
@@ -168,7 +168,7 @@ internal fun ProposalVO.toSessionSettleParams(
         properties = properties
     )
 
-@JvmSynthetic
+
 internal fun toSessionProposeParams(
     relays: List<RelayProtocolOptions>?,
     requiredNamespaces: Map<String, EngineDO.Namespace.Proposal>,
@@ -186,7 +186,7 @@ internal fun toSessionProposeParams(
     expiryTimestamp = expiry.seconds
 )
 
-@JvmSynthetic
+
 internal fun ProposalVO.toEngineDO(): EngineDO.SessionProposal =
     EngineDO.SessionProposal(
         pairingTopic = pairingTopic.value,
@@ -203,10 +203,10 @@ internal fun ProposalVO.toEngineDO(): EngineDO.SessionProposal =
         properties = properties
     )
 
-@JvmSynthetic
+
 internal fun ProposalVO.toExpiredProposal(): EngineDO.ExpiredProposal = EngineDO.ExpiredProposal(pairingTopic.value, proposerPublicKey)
 
-@JvmSynthetic
+
 internal fun Request<String>.toExpiredSessionRequest() = EngineDO.ExpiredRequest(topic.value, id)
 
 private fun convertToURI(it: String) = try {
@@ -215,71 +215,71 @@ private fun convertToURI(it: String) = try {
     null
 }
 
-@JvmSynthetic
+
 internal fun Map<String, EngineDO.Namespace.Proposal>.toNamespacesVORequired(): Map<String, Namespace.Proposal> =
     this.mapValues { (_, namespace) ->
         Namespace.Proposal(chains = namespace.chains, methods = namespace.methods, events = namespace.events)
     }
 
-@JvmSynthetic
+
 internal fun Map<String, EngineDO.Namespace.Proposal>.toNamespacesVOOptional(): Map<String, Namespace.Proposal> =
     this.mapValues { (_, namespace) ->
         Namespace.Proposal(chains = namespace.chains, methods = namespace.methods, events = namespace.events)
     }
 
-@JvmSynthetic
+
 internal fun Map<String, Namespace.Proposal>.toMapOfEngineNamespacesRequired(): Map<String, EngineDO.Namespace.Proposal> =
     this.mapValues { (_, namespace) ->
         EngineDO.Namespace.Proposal(namespace.chains, namespace.methods, namespace.events)
     }
 
-@JvmSynthetic
+
 internal fun Map<String, Namespace.Proposal>.toMapOfEngineNamespacesOptional(): Map<String, EngineDO.Namespace.Proposal> =
     this.mapValues { (_, namespace) ->
         EngineDO.Namespace.Proposal(namespace.chains, namespace.methods, namespace.events)
     }
 
-@JvmSynthetic
+
 internal fun Map<String, Namespace.Session>.toMapOfEngineNamespacesSession(): Map<String, EngineDO.Namespace.Session> =
     this.mapValues { (_, namespaceVO) ->
         EngineDO.Namespace.Session(namespaceVO.chains, namespaceVO.accounts, namespaceVO.methods, namespaceVO.events)
     }
 
-@JvmSynthetic
+
 internal fun Map<String, EngineDO.Namespace.Session>.toMapOfNamespacesVOSession(): Map<String, Namespace.Session> =
     this.mapValues { (_, namespace) ->
         Namespace.Session(namespace.chains, namespace.accounts, namespace.methods, namespace.events)
     }
 
-@JvmSynthetic
+
 internal fun JsonRpcResponse.JsonRpcResult.toEngineDO(): EngineDO.JsonRpcResponse.JsonRpcResult =
     EngineDO.JsonRpcResponse.JsonRpcResult(id = id, result = result.toString())
 
-@JvmSynthetic
+
 internal fun JsonRpcResponse.JsonRpcError.toEngineDO(): EngineDO.JsonRpcResponse.JsonRpcError =
     EngineDO.JsonRpcResponse.JsonRpcError(id = id, error = EngineDO.JsonRpcResponse.Error(error.code, error.message))
 
-@JvmSynthetic
+
 internal fun ProposalVO.toSessionApproveParams(selfPublicKey: PublicKey): CoreSignParams.ApprovalParams =
     CoreSignParams.ApprovalParams(
         relay = RelayProtocolOptions(relayProtocol, relayData),
         responderPublicKey = selfPublicKey.keyAsHex
     )
 
-@JvmSynthetic
+
 internal fun SignParams.SessionRequestParams.toEngineDO(topic: Topic): EngineDO.Request =
     EngineDO.Request(topic.value, request.method, request.params, chainId)
 
-@JvmSynthetic
+
 internal fun SignParams.EventParams.toEngineDOEvent(): EngineDO.Event =
     EngineDO.Event(event.name, event.data.toString(), chainId)
 
-@JvmSynthetic
+
 internal fun Request<String>.toSessionRequest(peerAppMetaData: AppMetaData?): EngineDO.SessionRequest =
     EngineDO.SessionRequest(topic.value, chainId, peerAppMetaData, EngineDO.SessionRequest.JSONRPCRequest(id, method, params), expiry)
 
 
-@JvmSynthetic
+
 internal fun ValidationError.toPeerError() = when (this) {
     is ValidationError.UnsupportedNamespaceKey -> PeerError.CAIP25.UnsupportedNamespaceKey(message)
     is ValidationError.UnsupportedChains -> PeerError.CAIP25.UnsupportedChains(message)
@@ -296,15 +296,15 @@ internal fun ValidationError.toPeerError() = when (this) {
     is ValidationError.EmptyNamespaces -> PeerError.CAIP25.EmptySessionNamespaces(message)
 }
 
-@JvmSynthetic
+
 internal fun VerifyContext.toEngineDO(): EngineDO.VerifyContext =
     EngineDO.VerifyContext(id, origin, validation, verifyUrl, isScam)
 
-@JvmSynthetic
+
 internal fun Requester.toEngineDO(): EngineDO.Participant =
     EngineDO.Participant(publicKey, metadata)
 
-@JvmSynthetic
+
 internal fun EngineDO.Authenticate.toCommon(): PayloadParams =
     PayloadParams(
         domain = domain,
@@ -321,7 +321,7 @@ internal fun EngineDO.Authenticate.toCommon(): PayloadParams =
         iat = SimpleDateFormat(Cacao.Payload.ISO_8601_PATTERN).format(Calendar.getInstance().time)
     )
 
-@JvmSynthetic
+
 internal fun PayloadParams.toEngineDO(): EngineDO.PayloadParams =
     EngineDO.PayloadParams(
         domain = domain,
@@ -338,7 +338,7 @@ internal fun PayloadParams.toEngineDO(): EngineDO.PayloadParams =
         iat = iat
     )
 
-@JvmSynthetic
+
 internal fun EngineDO.PayloadParams.toCacaoPayload(iss: Issuer): Cacao.Payload =
     Cacao.Payload(
         iss.value,
@@ -354,6 +354,6 @@ internal fun EngineDO.PayloadParams.toCacaoPayload(iss: Issuer): Cacao.Payload =
         resources = resources
     )
 
-@JvmSynthetic
+
 internal fun EngineDO.PayloadParams.toCAIP222Message(iss: Issuer, chainName: String): String =
     this.toCacaoPayload(iss).toCAIP222Message(chainName)

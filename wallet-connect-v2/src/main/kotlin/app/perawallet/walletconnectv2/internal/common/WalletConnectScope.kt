@@ -8,5 +8,5 @@ import kotlinx.coroutines.SupervisorJob
 
 private val job = SupervisorJob()
 
-@JvmSynthetic
+
 var scope = CoroutineScope(job + Dispatchers.IO)
