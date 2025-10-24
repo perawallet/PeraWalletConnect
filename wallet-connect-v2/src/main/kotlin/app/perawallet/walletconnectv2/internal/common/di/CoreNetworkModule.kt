@@ -2,7 +2,6 @@ package app.perawallet.walletconnectv2.internal.common.di
 
 import android.net.Uri
 import android.os.Build
-import com.pandulapeter.beagle.logOkHttp.BeagleOkHttpLogger
 import com.squareup.moshi.Moshi
 import com.tinder.scarlet.Lifecycle
 import com.tinder.scarlet.Scarlet
@@ -93,10 +92,6 @@ fun coreAndroidNetworkModule(serverUrl: String, connectionType: ConnectionType, 
                 if (BuildConfig.DEBUG) {
                     val loggingInterceptor = get<Interceptor>(named(AndroidCommonDITags.LOGGING_INTERCEPTOR))
                     addInterceptor(loggingInterceptor)
-                }
-
-                (BeagleOkHttpLogger.logger as Interceptor?)?.let { beagleHttpLoggerInterceptor ->
-                    addInterceptor(beagleHttpLoggerInterceptor)
                 }
             }
             .retryOnConnectionFailure(true)

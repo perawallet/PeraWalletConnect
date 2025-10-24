@@ -111,7 +111,6 @@ dependencies {
     implementation(libs.web3jCrypto)
     implementation(libs.bundles.kethereum)
     implementation(libs.bundles.retrofit)
-    implementation(libs.beagle.logOkhttp)
     implementation(libs.okhttp.logging)
     implementation(libs.mulitbase)
 

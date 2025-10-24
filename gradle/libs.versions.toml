@@ -1,5 +1,5 @@
 [versions]
-peraWalletConnect = "1.0.3"
+peraWalletConnect = "1.0.5"
 minSdk = "24"
 compileSdk = "36"
 targetSdk = "36"
@@ -36,7 +36,6 @@ timber = "5.0.1"
 web3j = "5.0.1"
 kethereum = "0.86.0"
 relinker = "1.4.5"
-beagle = "2.9.10"
 
 firebaseBOM = "34.4.0"
 
@@ -106,9 +105,6 @@ kethereum-bip39-wordlist = { module = "com.github.komputing.kethereum:bip39_word
 kethereum-bip32 = { module = "com.github.komputing.kethereum:bip32", version.ref = "kethereum" }
 kethereum-model = { module = "com.github.komputing.kethereum:model", version.ref = "kethereum" }
 kethereum-crypto = { module = "com.github.komputing.kethereum:crypto_impl_spongycastle", version.ref = "kethereum" }
-
-beagle-logOkhttp = { module = "io.github.pandulapeter.beagle:log-okhttp", version.ref = "beagle" }
-
 
 # Firebase — versions via BOM
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBOM" }
