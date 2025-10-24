@@ -11,10 +11,10 @@ plugins {
 
 android {
     namespace = "app.perawallet.walletconnectv2"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 28
+        minSdk = libs.versions.minSdk.get().toInt()
         buildConfigField("String", "SDK_VERSION", "\"1.0.0\"")
         buildConfigField(
             "String",
@@ -100,6 +100,7 @@ dependencies {
     api(libs.coroutines)
     api(libs.koin.android)
     api(libs.bundles.scarlet)
+
     implementation(libs.scarlet.android)
     implementation(libs.bundles.sqlDelight)
     implementation(libs.sqlCipher)
@@ -141,7 +142,7 @@ afterEvaluate {
 
                 groupId = "com.github.perawallet"
                 artifactId = "wallet-connect-v2"
-                version = "1.0.2"
+                version = libs.versions.peraWalletConnect.get()
 
                 pom {
                     name.set("Wallet Connect V2")

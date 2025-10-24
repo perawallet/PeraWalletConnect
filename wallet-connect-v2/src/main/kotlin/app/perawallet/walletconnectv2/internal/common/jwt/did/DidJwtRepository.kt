@@ -1,4 +1,4 @@
-@file:JvmSynthetic
+
 @file:JvmName("DidJwtRepository")
 
 package app.perawallet.walletconnectv2.internal.common.jwt.did

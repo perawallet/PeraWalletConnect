@@ -1,4 +1,4 @@
-@file:JvmSynthetic
+
 
 package app.perawallet.walletconnectv2.internal.common.storage.key_chain
 

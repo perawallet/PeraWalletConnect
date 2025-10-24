@@ -40,7 +40,7 @@ afterEvaluate {
 
                 groupId = "com.github.perawallet"
                 artifactId = "wallet-connect-v1"
-                version = "1.0.2"
+                version = libs.versions.peraWalletConnect.get()
 
                 pom {
                     name.set("Wallet Connect V1")
