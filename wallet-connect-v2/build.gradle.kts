@@ -1,4 +1,5 @@
 import org.gradle.api.JavaVersion
+import org.gradle.internal.classpath.Instrumented.systemProperty
 
 plugins {
     id("com.android.library")
@@ -7,6 +8,7 @@ plugins {
     alias(libs.plugins.google.ksp)
     id("kotlin-parcelize")
     id("maven-publish")
+    id("signing")
 }
 
 android {
@@ -16,17 +18,8 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         buildConfigField("String", "SDK_VERSION", "\"1.0.0\"")
-        buildConfigField(
-            "String",
-            "PROJECT_ID",
-            "\"${System.getenv("WC_CLOUD_PROJECT_ID") ?: ""}\""
-        )
-        buildConfigField(
-            "Integer",
-            "TEST_TIMEOUT_SECONDS",
-            "${System.getenv("TEST_TIMEOUT_SECONDS") ?: 30}"
-        )
-
+        buildConfigField("String", "PROJECT_ID", "\"${System.getenv("WC_CLOUD_PROJECT_ID") ?: ""}\"")
+        buildConfigField("Integer", "TEST_TIMEOUT_SECONDS", "${System.getenv("TEST_TIMEOUT_SECONDS") ?: 30}")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments += mutableMapOf("clearPackageData" to "true")
 
@@ -39,12 +32,11 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "${rootDir.path}/gradle/proguard-rules/sdk-rules.pro"
             )
-            isMinifyEnabled = false
         }
     }
 
@@ -64,6 +56,12 @@ android {
 
     buildFeatures {
         buildConfig = true
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 
     testOptions {
@@ -115,64 +113,48 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
-
     implementation(libs.moshi.adapters)
-
-    testImplementation(libs.bundles.androidxTest)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.json)
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.bundles.scarlet.test)
-    testImplementation(libs.bundles.sqlDelight.test)
-    testImplementation(libs.koin.test)
-
-    androidTestImplementation(libs.mockk.android)
-    androidTestImplementation(libs.coroutines.test)
-    androidTestImplementation(libs.core)
-    androidTestUtil(libs.androidx.testOrchestrator)
-    androidTestImplementation(libs.bundles.androidxAndroidTest)
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            // Safe lazy evaluation for Android components
+            afterEvaluate {
                 from(components["release"])
+            }
 
-                groupId = "com.github.perawallet"
-                artifactId = "wallet-connect-v2"
-                version = libs.versions.peraWalletConnect.get()
+            groupId = "app.perawallet"
+            artifactId = "pera-wallet-connect-v2"
+            version = libs.versions.peraWalletConnect.get()
 
-                pom {
-                    name.set("Wallet Connect V2")
-                    description.set("WalletConnect V2 SDK for Android")
+            pom {
+                name.set("Pera Wallet Connect V2")
+                description.set("WalletConnect V2 SDK for Android")
+                url.set("https://github.com/perawallet/PeraWalletConnect")
+
+                licenses {
+                    license {
+                        name.set("Apache License 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("perawallet")
+                        name.set("Pera Wallet")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/perawallet/PeraWalletConnect.git")
+                    developerConnection.set("scm:git:ssh://github.com/perawallet/PeraWalletConnect.git")
                     url.set("https://github.com/perawallet/PeraWalletConnect")
-
-                    licenses {
-                        license {
-                            name.set("Apache License 2.0")
-                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id.set("perawallet")
-                            name.set("Pera Wallet")
-                        }
-                    }
-
-                    scm {
-                        connection.set("scm:git:git://github.com/perawallet/PeraWalletConnect.git")
-                        developerConnection.set("scm:git:ssh://github.com/perawallet/PeraWalletConnect.git")
-                        url.set("https://github.com/perawallet/PeraWalletConnect")
-                    }
                 }
             }
         }
+    }
 
-        repositories {
-            mavenLocal()
-        }
+    repositories {
+        mavenLocal()
     }
 }

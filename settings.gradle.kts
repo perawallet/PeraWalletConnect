@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Pera Wallet Connect"
+rootProject.name = "PeraWalletConnect"
 include(":wallet-connect-v1")
 include(":wallet-connect-v2")

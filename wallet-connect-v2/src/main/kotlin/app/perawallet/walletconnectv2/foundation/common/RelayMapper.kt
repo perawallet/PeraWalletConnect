@@ -1,12 +1,10 @@
-
-
 package app.perawallet.walletconnectv2.foundation.common
 
+import app.perawallet.walletconnectv2.foundation.network.model.Relay
+import app.perawallet.walletconnectv2.foundation.network.model.RelayDTO
 import com.tinder.scarlet.Message
 import com.tinder.scarlet.ShutdownReason
 import com.tinder.scarlet.WebSocket
-import app.perawallet.walletconnectv2.foundation.network.model.Relay
-import app.perawallet.walletconnectv2.foundation.network.model.RelayDTO
 
 
 fun WebSocket.Event.toRelayEvent() = when (this) {
@@ -38,7 +36,13 @@ internal fun ShutdownReason.toRelay() =
 
 
 internal fun RelayDTO.Subscription.Request.Params.SubscriptionData.toRelay() =
-    Relay.Model.Call.Subscription.Request.Params.SubscriptionData(topic.value, message, publishedAt, attestation, tag)
+    Relay.Model.Call.Subscription.Request.Params.SubscriptionData(
+        topic.value,
+        message,
+        publishedAt,
+        attestation,
+        tag
+    )
 
 
 internal fun RelayDTO.Subscription.Request.Params.toRelay() =
