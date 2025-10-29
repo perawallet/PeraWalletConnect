@@ -1,5 +1,4 @@
 import org.gradle.api.JavaVersion
-import org.gradle.internal.classpath.Instrumented.systemProperty
 
 plugins {
     id("com.android.library")
@@ -7,8 +6,8 @@ plugins {
     alias(libs.plugins.sqlDelight)
     alias(libs.plugins.google.ksp)
     id("kotlin-parcelize")
-    id("maven-publish")
-    id("signing")
+    `maven-publish`
+    signing
 }
 
 android {
@@ -61,6 +60,7 @@ android {
     publishing {
         singleVariant("release") {
             withSourcesJar()
+            withJavadocJar()
         }
     }
 
@@ -119,7 +119,6 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("release") {
-            // Safe lazy evaluation for Android components
             afterEvaluate {
                 from(components["release"])
             }
@@ -152,9 +151,5 @@ publishing {
                 }
             }
         }
-    }
-
-    repositories {
-        mavenLocal()
     }
 }

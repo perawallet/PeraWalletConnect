@@ -2,8 +2,8 @@ import org.gradle.api.JavaVersion
 
 plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm)
-    id("maven-publish")
-    id("signing")
+    `maven-publish`
+    signing
 }
 
 java {
@@ -35,7 +35,6 @@ dependencies {
     implementation(libs.okhttp)
 }
 
-// ✅ PUBLISHING CONFIGURATION
 publishing {
     publications {
         create<MavenPublication>("release") {
@@ -70,18 +69,6 @@ publishing {
                     url.set("https://github.com/perawallet/PeraWalletConnect")
                 }
             }
-        }
-    }
-}
-
-afterEvaluate {
-    extensions.findByType<SigningExtension>()?.apply {
-        val key = System.getenv("GPG_PRIVATE_KEY")
-        val password = System.getenv("GPG_PRIVATE_KEY_PASSWORD")
-
-        if (!key.isNullOrBlank() && !password.isNullOrBlank()) {
-            useInMemoryPgpKeys(key, password)
-            sign(publishing.publications)
         }
     }
 }

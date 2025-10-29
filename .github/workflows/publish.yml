@@ -1,4 +1,4 @@
-name: Publish all modules to Maven Central
+name: Publish all modules to Maven Central (NMCP)
 
 on:
   push:
@@ -23,16 +23,20 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Import GPG key
+      - name: Decode and import GPG key
         run: |
-          echo "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
+          echo "$GPG_PRIVATE_KEY_BASE64" | base64 --decode > /tmp/private.key
+          gpg --batch --import /tmp/private.key
+          # optional check
+          gpg --list-secret-keys --keyid-format LONG
+          shred -u /tmp/private.key || rm -f /tmp/private.key
         env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PRIVATE_KEY_BASE64: ${{ secrets.GPG_PRIVATE_KEY_BASE64 }}
 
-      - name: Publish to Maven Central (all modules)
-        run: ./gradlew clean publishToSonatype closeAndReleaseSonatypeStagingRepository --stacktrace
+      - name: Publish to Maven Central (NMCP)
+        run: ./gradlew --no-daemon clean publishAggregationToCentralPortal --stacktrace
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PRIVATE_KEY_PASSWORD: ${{ secrets.GPG_PRIVATE_KEY_PASSWORD }}
+          CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
