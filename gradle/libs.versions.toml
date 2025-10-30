@@ -1,5 +1,5 @@
 [versions]
-peraWalletConnect = "1.0.7"
+peraWalletConnect = "1.0.8"
 minSdk = "24"
 compileSdk = "36"
 targetSdk = "36"
