@@ -98,10 +98,10 @@ dependencies {
     api(libs.coroutines)
     api(libs.koin.android)
     api(libs.bundles.scarlet)
+    api(libs.sqlCipher)
 
     implementation(libs.scarlet.android)
     implementation(libs.bundles.sqlDelight)
-    implementation(libs.sqlCipher)
     implementation(libs.relinker)
     implementation(libs.androidx.security)
     implementation(libs.timber)
