@@ -1,2 +1,2 @@
--keep,includedescriptorclasses class net.sqlcipher.** { *; }
--keep,includedescriptorclasses interface net.sqlcipher.** { *; }
+-keep,includedescriptorclasses class net.zetetic.** { *; }
+-keep,includedescriptorclasses interface net.zetetic.** { *; }

@@ -71,6 +71,12 @@ android {
             isReturnDefaultValues = true
         }
     }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+        resources.excludes += listOf("META-INF/*.kotlin_module", "META-INF/LICENSE*")
+    }
 }
 
 sqldelight {
