@@ -1,10 +1,10 @@
 [versions]
-peraWalletConnect = "1.0.9"
+peraWalletConnect = "1.1.0"
 minSdk = "24"
 compileSdk = "36"
 targetSdk = "36"
 
-agp = "8.13.0"
+agp = "8.13.1"
 kotlin = "2.1.0"
 
 # Libraries
@@ -21,7 +21,7 @@ sqlDelight = "2.1.0"
 scarlet = "1.0.1"
 koin = "4.1.1"
 retrofit = "3.0.0"
-sqlCipher = "4.11.0"
+sqlCipher = "4.13.0"
 multibase = "1.1.1"
 timber = "5.0.1"
 web3j = "5.0.1"

@@ -43,11 +43,15 @@ private const val SHARED_PREFS_FILENAME = "db_key_store"
 private const val KEY_SIZE = 256
 private val keyStore: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }
 private val cipher: Cipher =
-    "${KeyProperties.KEY_ALGORITHM_AES}/${KeyProperties.BLOCK_MODE_GCM}/${KeyProperties.ENCRYPTION_PADDING_NONE}".let { transformation ->
+    ("${KeyProperties.KEY_ALGORITHM_AES}/${KeyProperties.BLOCK_MODE_GCM}/" +
+            "${KeyProperties.ENCRYPTION_PADDING_NONE}").let { transformation ->
         Cipher.getInstance(transformation)
     }
 private val keyGenParameterSpec: KeyGenParameterSpec =
-    KeyGenParameterSpec.Builder(KEYSTORE_ALIAS, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+    KeyGenParameterSpec.Builder(
+        KEYSTORE_ALIAS,
+        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+    )
         .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
         .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
         .setKeySize(KEY_SIZE)
@@ -76,7 +80,8 @@ private fun Scope.deleteSharedPreferences() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     deleteSharedPreferences(SHARED_PREFS_FILENAME)
                 } else {
-                    getSharedPreferences(SHARED_PREFS_FILENAME, Context.MODE_PRIVATE).edit().clear().apply()
+                    getSharedPreferences(SHARED_PREFS_FILENAME, Context.MODE_PRIVATE).edit().clear()
+                        .apply()
                     val dir = File(applicationInfo.dataDir, "shared_prefs")
                     File(dir, "$SHARED_PREFS_FILENAME.xml").delete()
                 }
@@ -84,13 +89,18 @@ private fun Scope.deleteSharedPreferences() {
         }
         keyStore.deleteEntry(KEYSTORE_ALIAS)
     } catch (e: Exception) {
-        get<Logger>(named(AndroidCommonDITags.LOGGER)).error("Occurred when trying to reset encrypted shared prefs: $e")
+        get<Logger>(named(AndroidCommonDITags.LOGGER)).error(
+            "Occurred when trying to reset encrypted shared prefs: $e"
+        )
     }
 }
 
 @Synchronized
 private fun getSecretKey(): SecretKey {
-    return (keyStore.getEntry(keyGenParameterSpec.keystoreAlias, null) as? KeyStore.SecretKeyEntry)?.secretKey ?: KeyGenerator.getInstance(
+    return (keyStore.getEntry(
+        keyGenParameterSpec.keystoreAlias,
+        null
+    ) as? KeyStore.SecretKeyEntry)?.secretKey ?: KeyGenerator.getInstance(
         KeyProperties.KEY_ALGORITHM_AES,
         ANDROID_KEYSTORE
     ).run {
@@ -110,7 +120,10 @@ private fun signingModule() = module {
             deleteDatabases()
             createSharedPreferences()
         }
-        val encryptedDBKeyFromStore: ByteArray? = sharedPreferences.getString(SP_ENCRYPTED_KEY, null)?.let { encryptedDBKey ->
+        val encryptedDBKeyFromStore: ByteArray? = sharedPreferences.getString(
+            SP_ENCRYPTED_KEY,
+            null
+        )?.let { encryptedDBKey ->
             Base64.decode(encryptedDBKey, Base64.DEFAULT)
         }
 
@@ -130,7 +143,10 @@ private fun signingModule() = module {
                 put(encryptedKey)
             }
 
-            sharedPreferences.edit().putString(SP_ENCRYPTED_KEY, Base64.encodeToString(ivAndEncryptedKey, Base64.NO_WRAP)).apply()
+            sharedPreferences.edit().putString(
+                SP_ENCRYPTED_KEY,
+                Base64.encodeToString(ivAndEncryptedKey, Base64.NO_WRAP)
+            ).apply()
 
             generatedKeyForDBByteArray
         } else {
@@ -141,9 +157,10 @@ private fun signingModule() = module {
             val iv = ByteArray(ivLength).apply {
                 buffer.get(this)
             }
-            val encryptedKey = ByteArray(encryptedDBKeyFromStore.size - Integer.BYTES - ivLength).apply {
-                buffer.get(this)
-            }
+            val encryptedKey =
+                ByteArray(encryptedDBKeyFromStore.size - Integer.BYTES - ivLength).apply {
+                    buffer.get(this)
+                }
 
             val secretKey: SecretKey = getSecretKey()
             val ivSpec = GCMParameterSpec(128, iv)
@@ -154,27 +171,61 @@ private fun signingModule() = module {
     }
 }
 
-fun getSupportFactory(
+private fun getSupportFactory(
     context: Context,
     passphrase: ByteArray,
     hook: SQLiteDatabaseHook?,
     clearPassphrase: Boolean
-): SupportOpenHelperFactory {
-    loadLibrary(context)
-    return SupportOpenHelperFactory(passphrase, hook, clearPassphrase)
+): SupportOpenHelperFactory? {
+    return if (loadLibrary(context)) {
+        SupportOpenHelperFactory(passphrase, hook, clearPassphrase)
+    } else {
+        null
+    }
 }
 
-private fun loadLibrary(context: Context) {
+private fun loadLibrary(context: Context): Boolean {
     val libraryName = "sqlcipher"
-    try {
+    return try {
         System.loadLibrary(libraryName)
+        true
     } catch (e: UnsatisfiedLinkError) {
+        var loaded = false
         ReLinker.loadLibrary(context, libraryName, object : ReLinker.LoadListener {
-            override fun success() {}
+            override fun success() {
+                loaded = true
+            }
+
             override fun failure(t: Throwable?) {
-                throw e
             }
         })
+        loaded
+    }
+}
+
+private fun Scope.createSqlDriver(
+    schema: SqlSchema<QueryResult.Value<Unit>>,
+    name: String
+): SqlDriver {
+    val factory = getSupportFactory(
+        androidContext(),
+        get(named(AndroidBuildVariantDITags.DB_PASSPHRASE)),
+        null,
+        false
+    )
+    return if (factory != null) {
+        AndroidSqliteDriver(
+            schema = schema,
+            context = androidContext(),
+            name = name,
+            factory = factory
+        )
+    } else {
+        AndroidSqliteDriver(
+            schema = schema,
+            context = androidContext(),
+            name = name
+        )
     }
 }
 
@@ -183,24 +234,21 @@ fun coreStorageModule(storagePrefix: String = String.Empty, bundleId: String) = 
     includes(baseStorageModule(storagePrefix, bundleId), signingModule())
 
     single<SqlDriver>(named(AndroidBuildVariantDITags.ANDROID_CORE_DATABASE_DRIVER)) {
-        AndroidSqliteDriver(
+        createSqlDriver(
             schema = AndroidCoreDatabase.Schema,
-            context = androidContext(),
-            name = get<DatabaseConfig>().ANDROID_CORE_DB_NAME,
-            factory = getSupportFactory(androidContext(), get(named(AndroidBuildVariantDITags.DB_PASSPHRASE)), null, false) //todo: create a separate DB_PASSHPHRASE
+            name = get<DatabaseConfig>().ANDROID_CORE_DB_NAME
         )
     }
 }
 
 @SuppressLint("HardwareIds")
-fun sdkBaseStorageModule(databaseSchema: SqlSchema<QueryResult.Value<Unit>>, databaseName: String) = module {
+fun sdkBaseStorageModule(databaseSchema: SqlSchema<QueryResult.Value<Unit>>, databaseName: String) =
+    module {
 
-    single<SqlDriver>(named(databaseName)) {
-        AndroidSqliteDriver(
-            schema = databaseSchema,
-            context = androidContext(),
-            name = databaseName,
-            factory = getSupportFactory(androidContext(), get(named(AndroidBuildVariantDITags.DB_PASSPHRASE)), null, false)
-        )
+        single<SqlDriver>(named(databaseName)) {
+            createSqlDriver(
+                schema = databaseSchema,
+                name = databaseName
+            )
+        }
     }
-}
