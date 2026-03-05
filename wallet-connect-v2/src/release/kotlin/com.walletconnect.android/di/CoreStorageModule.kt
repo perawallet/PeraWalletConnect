@@ -9,7 +9,6 @@ import android.security.keystore.KeyProperties
 import android.util.Base64
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import app.cash.sqldelight.db.QueryResult
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.db.SqlSchema
@@ -214,12 +213,20 @@ private fun Scope.createSqlDriver(
         null,
         false
     )
-    return AndroidSqliteDriver(
-        schema = schema,
-        context = androidContext(),
-        name = name,
-        factory = factory ?: FrameworkSQLiteOpenHelperFactory()
-    )
+    return if (factory != null) {
+        AndroidSqliteDriver(
+            schema = schema,
+            context = androidContext(),
+            name = name,
+            factory = factory
+        )
+    } else {
+        AndroidSqliteDriver(
+            schema = schema,
+            context = androidContext(),
+            name = name
+        )
+    }
 }
 
 fun coreStorageModule(storagePrefix: String = String.Empty, bundleId: String) = module {
