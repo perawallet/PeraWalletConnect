@@ -108,8 +108,7 @@ private fun getSecretKey(): SecretKey {
         init(keyGenParameterSpec)
         generateKey()
     }
-}        get<Logger>(named(AndroidCommonDITags.LOGGER)).error(
-
+}
 
 @Synchronized
 private fun signingModule() = module {
